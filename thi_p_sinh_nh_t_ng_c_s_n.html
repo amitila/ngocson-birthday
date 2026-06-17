@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Sinh Nhật Ngọc Sơn 18/06/2026</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Quicksand & Pacifico -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffcad4 50%, #b5e2fa 100%);
+            overflow-x: hidden;
+        }
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        /* Hiệu ứng bay bổng nhẹ nhàng */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        .float-animation {
+            animation: float-slow 4s ease-in-out infinite;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; }
+        }
+        .pulse-animation {
+            animation: pulse-soft 3s ease-in-out infinite;
+        }
+        /* Hiệu ứng kính mờ cao cấp */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 35px rgba(244, 143, 177, 0.25);
+        }
+        /* Khung ảnh Polaroid */
+        .polaroid-frame {
+            background: white;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-bottom: 24px solid white;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 relative">
+
+    <!-- Các hạt trang trí bay lơ lửng xung quanh nền -->
+    <div class="absolute top-10 left-10 text-4xl opacity-40 float-animation" style="animation-delay: 0s;">🎈</div>
+    <div class="absolute top-20 right-12 text-5xl opacity-40 float-animation" style="animation-delay: 1.5s;">✨</div>
+    <div class="absolute bottom-16 left-8 text-4xl opacity-35 float-animation" style="animation-delay: 2.5s;">🌸</div>
+    <div class="absolute bottom-20 right-10 text-5xl opacity-40 float-animation" style="animation-delay: 1s;">🎸</div>
+
+    <!-- Khung chứa chính -->
+    <div class="w-full max-w-lg z-10">
+        
+        <!-- MÀN HÌNH 1: BÌA PHONG THƯ ĐỂ MỞ -->
+        <div id="envelope" class="glass-card rounded-3xl p-8 text-center shadow-2xl transition-all duration-700 ease-in-out transform hover:scale-[1.01] relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-32 h-32 bg-pink-200 rounded-full blur-2xl opacity-50"></div>
+            <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-200 rounded-full blur-2xl opacity-50"></div>
+
+            <div class="text-6xl mb-4">💌</div>
+            <h1 class="text-3xl font-bold text-pink-600 mb-2 font-pacifico">Gửi Ngọc Sơn...</h1>
+            <p class="text-gray-600 text-sm mb-6">Một món quà sinh nhật bất ngờ dành riêng cho Sơn nhân ngày 18/06/2026. Hãy mở ra nhé! ✨</p>
+            
+            <button onclick="openCard()" class="bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white font-bold py-4 px-8 rounded-full shadow-lg transform active:scale-95 transition-all pulse-animation duration-300">
+                Mở Thiệp Sinh Nhật 🎁
+            </button>
+        </div>
+
+        <!-- MÀN HÌNH 2: NỘI DUNG CHI TIẾT THIỆP SINH NHẬT -->
+        <div id="birthday-card" class="hidden glass-card rounded-3xl overflow-hidden shadow-2xl transition-all duration-1000 transform opacity-0 scale-95 flex flex-col">
+            
+            <!-- Khu vực Khung Ảnh Polaroid của Ngọc Sơn -->
+            <div class="p-6 pb-2 flex flex-col items-center bg-pink-50/30">
+                <div class="polaroid-frame p-3 pb-8 rounded-lg w-full max-w-[320px] relative overflow-hidden">
+                    
+                    <!-- Khung chứa ảnh có chức năng Zoom và Di chuyển -->
+                    <div class="w-full aspect-square relative bg-pink-100/40 rounded overflow-hidden border border-gray-100">
+                        <img id="birthday-boy" src="8122.jpg" alt="Ngọc Sơn ôm đàn Guitar" 
+                             class="absolute transition-all duration-75 origin-center pointer-events-none"
+                             style="width: 100%; height: 100%; object-fit: cover; transform: scale(1) translate(0px, 0px);">
+                        
+                        <!-- Hiệu ứng tuyết rơi/bong bóng đè lên ảnh -->
+                        <canvas id="canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10"></canvas>
+                        
+                        <!-- Nhãn ngày tháng xinh xắn đè lên ảnh -->
+                        <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-pink-500/90 text-white text-[10px] px-3 py-1 rounded-full shadow-md font-bold flex items-center gap-1 z-20">
+                            <span>🎂 18.06.2026</span>
+                        </div>
+                    </div>
+
+                    <!-- Nút đổi ảnh nhanh chóng từ thiết bị nếu đường dẫn mặc định bị lỗi -->
+                    <div class="mt-3 flex flex-col items-center gap-2">
+                        <label class="cursor-pointer bg-pink-50 hover:bg-pink-100 border border-pink-200 text-pink-600 text-xs py-1.5 px-3 rounded-full transition-all flex items-center gap-1 shadow-sm">
+                            📁 Chọn ảnh khác từ máy
+                            <input type="file" id="file-input" accept="image/*" class="hidden" onchange="loadCustomImage(event)">
+                        </label>
+                    </div>
+
+                    <!-- BỘ CÔNG CỤ ĐIỀU CHỈNH KÍCH THƯỚC VÀ VỊ TRÍ ẢNH -->
+                    <div class="mt-4 pt-3 border-t border-gray-100 flex flex-col gap-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-[11px] font-bold text-gray-500">Phóng to/Thu nhỏ:</span>
+                            <input id="zoom-slider" type="range" min="1" max="3" step="0.05" value="1" 
+                                   class="w-32 h-1 bg-pink-200 rounded-lg appearance-none cursor-pointer accent-pink-500"
+                                   oninput="adjustImage()">
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-gray-500">Căn chỉnh vị trí:</span>
+                            <!-- Nút di chuyển 4 hướng -->
+                            <div class="grid grid-cols-3 gap-1 w-24">
+                                <div></div>
+                                <button onclick="moveImage('up')" class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-[10px] font-bold p-1 rounded-md">▲</button>
+                                <div></div>
+                                <button onclick="moveImage('left')" class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-[10px] font-bold p-1 rounded-md">◀</button>
+                                <button onclick="resetImage()" class="bg-pink-100 hover:bg-pink-200 text-pink-600 text-[10px] font-bold p-1 rounded-md">●</button>
+                                <button onclick="moveImage('right')" class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-[10px] font-bold p-1 rounded-md">▶</button>
+                                <div></div>
+                                <button onclick="moveImage('down')" class="bg-gray-100 hover:bg-gray-200 text-gray-600 text-[10px] font-bold p-1 rounded-md">▼</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Khu vực lời chúc & Phát nhạc -->
+            <div class="p-6 text-center bg-white/70 backdrop-blur-md flex-1 flex flex-col justify-between border-t border-pink-100/50">
+                <div>
+                    <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-indigo-500 font-pacifico mb-2">
+                        Happy Birthday, Ngọc Sơn! 🎉
+                    </h2>
+                    
+                    <!-- Lời chúc chuyển đổi mượt mà -->
+                    <p id="wish-text" class="text-gray-700 font-medium text-sm md:text-base min-h-[50px] px-2 italic transition-all duration-300">
+                        "Chúc Sơn tuổi mới thật nhiều niềm vui, luôn giữ mãi ngọn lửa đam mê với cây đàn guitar và gặt hái thật nhiều thành công mới nhé!"
+                    </p>
+                </div>
+
+                <!-- Điều khiển âm nhạc & Đổi lời chúc -->
+                <div class="mt-4 pt-4 border-t border-pink-100/50 flex flex-col gap-3">
+                    
+                    <!-- Trình phát nhạc vui nhộn -->
+                    <div class="flex items-center justify-between bg-white p-2.5 rounded-2xl shadow-sm border border-pink-50">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl animate-spin" style="animation-duration: 3s;" id="music-disc">🎵</span>
+                            <div class="text-left">
+                                <p class="text-xs font-bold text-gray-700">Happy Birthday Theme</p>
+                                <p class="text-[10px] text-gray-400">Hộp nhạc dễ thương</p>
+                            </div>
+                        </div>
+                        <button id="play-btn" onclick="toggleMusic()" class="bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white rounded-full p-2 w-10 h-10 flex items-center justify-center shadow-md transition-all active:scale-90">
+                            <svg id="play-icon" class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <svg id="pause-icon" class="w-5 h-5 fill-current hidden" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Đổi lời chúc nhanh -->
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="changeWish(0)" class="text-[11px] font-bold bg-pink-100/80 hover:bg-pink-100 text-pink-600 py-2 px-1 rounded-xl border border-pink-200/50 transition-all">🎸 Đam mê</button>
+                        <button onclick="changeWish(1)" class="text-[11px] font-bold bg-blue-100/80 hover:bg-blue-100 text-blue-600 py-2 px-1 rounded-xl border border-blue-200/50 transition-all">✨ Hạnh phúc</button>
+                        <button onclick="changeWish(2)" class="text-[11px] font-bold bg-amber-100/80 hover:bg-amber-100 text-amber-600 py-2 px-1 rounded-xl border border-amber-200/50 transition-all">🚀 Thành công</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web Audio API - Tự tạo giai điệu chúc mừng sinh nhật ngọt ngào -->
+    <script>
+        let audioCtx = null;
+        let isPlaying = false;
+        let noteTimeout = null;
+
+        const melody = [
+            {note: 'C4', dur: 0.5}, {note: 'C4', dur: 0.5}, {note: 'D4', dur: 1}, {note: 'C4', dur: 1}, {note: 'F4', dur: 1}, {note: 'E4', dur: 2},
+            {note: 'C4', dur: 0.5}, {note: 'C4', dur: 0.5}, {note: 'D4', dur: 1}, {note: 'C4', dur: 1}, {note: 'G4', dur: 1}, {note: 'F4', dur: 2},
+            {note: 'C4', dur: 0.5}, {note: 'C4', dur: 0.5}, {note: 'C5', dur: 1}, {note: 'A4', dur: 1}, {note: 'F4', dur: 1}, {note: 'E4', dur: 1}, {note: 'D4', dur: 1},
+            {note: 'A#4', dur: 0.5}, {note: 'A#4', dur: 0.5}, {note: 'A4', dur: 1}, {note: 'F4', dur: 1}, {note: 'G4', dur: 1}, {note: 'F4', dur: 2}
+        ];
+
+        const freqs = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 'G4': 392.00, 'A4': 440.00, 'A#4': 466.16, 'C5': 523.25
+        };
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        let currentNoteIndex = 0;
+        function playSong() {
+            if (!isPlaying) return;
+            initAudio();
+
+            const item = melody[currentNoteIndex];
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freqs[item.note], audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + item.dur * 0.8);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + item.dur * 0.8);
+
+            // Bắn ra các nốt nhạc bay lên từ góc đàn
+            spawnMusicNote(window.innerWidth / 2, window.innerHeight / 3);
+
+            currentNoteIndex = (currentNoteIndex + 1) % melody.length;
+            noteTimeout = setTimeout(playSong, item.dur * 400);
+        }
+
+        function toggleMusic() {
+            initAudio();
+            const playIcon = document.getElementById('play-icon');
+            const pauseIcon = document.getElementById('pause-icon');
+            const disc = document.getElementById('music-disc');
+
+            if (isPlaying) {
+                isPlaying = false;
+                clearTimeout(noteTimeout);
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                disc.classList.remove('animate-spin');
+            } else {
+                isPlaying = true;
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                disc.classList.add('animate-spin');
+                playSong();
+            }
+        }
+    </script>
+
+    <!-- Quản lý căn chỉnh ảnh và tải ảnh thủ công -->
+    <script>
+        let imgScale = 1.0;
+        let imgX = 0;
+        let imgY = 0;
+
+        function adjustImage() {
+            const slider = document.getElementById('zoom-slider');
+            imgScale = parseFloat(slider.value);
+            applyTransform();
+        }
+
+        function moveImage(direction) {
+            const step = 15; // pixel di chuyển mỗi lần bấm
+            if (direction === 'up') imgY -= step;
+            if (direction === 'down') imgY += step;
+            if (direction === 'left') imgX -= step;
+            if (direction === 'right') imgX += step;
+            applyTransform();
+        }
+
+        function resetImage() {
+            imgScale = 1.0;
+            imgX = 0;
+            imgY = 0;
+            document.getElementById('zoom-slider').value = 1;
+            applyTransform();
+        }
+
+        function applyTransform() {
+            const img = document.getElementById('birthday-boy');
+            img.style.transform = `scale(${imgScale}) translate(${imgX}px, ${imgY}px)`;
+        }
+
+        // Đọc ảnh tải lên thủ công nếu ảnh mặc định không hiển thị
+        function loadCustomImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const img = document.getElementById('birthday-boy');
+                img.src = reader.result;
+                resetImage();
+            };
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
+
+    <!-- Canvas tạo các hạt chuyển động lãng mạn như ảnh GIF -->
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationFrameId;
+
+        const wishes = [
+            `"Chúc Sơn tuổi mới thật nhiều niềm vui, luôn giữ mãi ngọn lửa đam mê với cây đàn guitar và gặt hái thật nhiều thành công mới nhé!"`,
+            `"Mừng sinh nhật Ngọc Sơn! Chúc bạn tuổi mới luôn bình yên, vui vẻ, hạnh phúc bên gia đình và luôn tràn ngập nụ cười dễ thương!"`,
+            `"Chúc bạn tôi bước sang tuổi mới rực rỡ, hoàn thành xuất sắc mọi dự định lớn và có những cung bậc cảm xúc tuyệt vời nhất!"`
+        ];
+
+        function changeWish(index) {
+            const txt = document.getElementById('wish-text');
+            txt.style.opacity = 0;
+            setTimeout(() => {
+                txt.innerText = wishes[index];
+                txt.style.opacity = 1;
+            }, 250);
+            
+            // Hiệu ứng pháo giấy nổ tung khi đổi lời chúc
+            for (let i = 0; i < 15; i++) {
+                particles.push(new Particle(canvas.width / 2, canvas.height - 30, 'heart'));
+            }
+        }
+
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+
+        class Particle {
+            constructor(x, y, type = null) {
+                this.x = x;
+                this.y = y;
+                this.type = type || ['confetti', 'heart', 'balloon', 'sparkle'][Math.floor(Math.random() * 4)];
+                this.size = Math.random() * 6 + 4;
+                this.speedY = -(Math.random() * 1.2 + 0.6);
+                this.speedX = Math.random() * 1.0 - 0.5;
+                this.angle = Math.random() * Math.PI * 2;
+                this.angularSpeed = (Math.random() - 0.5) * 0.03;
+                
+                const hues = [345, 15, 195, 45, 160];
+                this.color = `hsla(${hues[Math.floor(Math.random() * hues.length)]}, 90%, 75%, ${Math.random() * 0.4 + 0.6})`;
+                
+                if (this.type === 'balloon') {
+                    this.size = Math.random() * 10 + 8;
+                    this.speedY = -(Math.random() * 0.8 + 0.4);
+                } else if (this.type === 'music') {
+                    this.size = Math.random() * 8 + 10;
+                    this.speedY = -(Math.random() * 1.5 + 1.0);
+                    this.speedX = (Math.random() - 0.5) * 1.5;
+                }
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.angle += this.angularSpeed;
+
+                if (this.type === 'balloon') {
+                    this.speedX += Math.sin(this.y / 25) * 0.02;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = this.color;
+
+                if (this.type === 'confetti') {
+                    ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+                } else if (this.type === 'heart') {
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, 0, 0, this.size);
+                    ctx.bezierCurveTo(this.size, 0, this.size/2, -this.size/2, 0, 0);
+                    ctx.fill();
+                } else if (this.type === 'balloon') {
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.size * 0.8, this.size, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(-2, this.size);
+                    ctx.lineTo(2, this.size);
+                    ctx.lineTo(0, this.size + 3);
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (this.type === 'sparkle') {
+                    ctx.beginPath();
+                    for (let i = 0; i < 4; i++) {
+                        ctx.lineTo(0, -this.size);
+                        ctx.lineTo(this.size * 0.2, -this.size * 0.2);
+                        ctx.rotate(Math.PI / 2);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                } else if (this.type === 'music') {
+                    ctx.fillStyle = this.color;
+                    ctx.font = `${this.size}px Arial`;
+                    ctx.fillText('♪', 0, 0);
+                }
+
+                ctx.restore();
+            }
+        }
+
+        function spawnMusicNote(x, y) {
+            particles.push(new Particle(x, y, 'music'));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (Math.random() < 0.04) {
+                particles.push(new Particle(Math.random() * canvas.width, canvas.height + 15));
+            }
+
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+
+                if (p.y < -30 || p.x < -30 || p.x > canvas.width + 30) {
+                    particles.splice(i, 1);
+                }
+            }
+
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        function openCard() {
+            const envelope = document.getElementById('envelope');
+            const card = document.getElementById('birthday-card');
+
+            envelope.classList.add('scale-75', 'opacity-0');
+            setTimeout(() => {
+                envelope.classList.add('hidden');
+                card.classList.remove('hidden');
+                setTimeout(() => {
+                    card.classList.remove('opacity-0', 'scale-95');
+                    card.classList.add('opacity-100', 'scale-100');
+                    
+                    resizeCanvas();
+                    animate();
+                    toggleMusic();
+                }, 50);
+            }, 500);
+        }
+
+        window.addEventListener('resize', () => {
+            if (!canvas.classList.contains('hidden')) {
+                resizeCanvas();
+            }
+        });
+    </script>
+</body>
+</html>
